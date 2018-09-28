@@ -24,8 +24,94 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+        <section>
+          <h1>Proposal for Generics</h1>
+          <section>
+            <small>Cuahuctemoc Osorio (Temo)</small><br/>
+            <small>github.com/cclulu</small><br/>
+          </section>
+        </section>
+
+        <section>
+          <h3>Cases:</h3>
+          <section>
+            <p class="fragment"><span>collections</span></p>
+            <p class="fragment"><span>Data structs</span></p>
+            <p class="fragment"><span>Basically you don't need to re-implement code for concrete types</span></p>
+          </section>
+        </section>
+
+        <section>
+          <h3>Pros:</h3>
+          <section>
+            <p class="fragment"><span>reuse code: no boilerplate </span></p>
+          </section>
+        </section>
+
+        <section>
+          <h3>Cons:</h3>
+          <section>
+            <p class="fragment"><span>increased complexity in the type system and run-time</span></p>
+          </section>
+        </section>
+
+        <section>
+          <h3>Why wasn't it incuded?</h3>
+          <section>
+            <p class="fragment"><span>intended for writing server programs that would be easy to maintain over time.</span></p>
+            <p class="fragment"><span>scalability</span></p>
+            <p class="fragment"><span>readability</span></p>
+            <p class="fragment"><span>concurrency</span></p>
+            <p class="fragment"><span>Polymorphic programming not a goal,so it was left out for simplicity.</span></p>
+          </section>
+        </section>
+
+        <section>
+          <h3>Draft Design</h3>
+          <section>
+              <pre>
+               <code>
+func Stringify(type T)(s []T) (ret []string) {
+	for _, v := range s {
+		ret = append(ret, v.String()) // INVALID
+	}
+	return ret
+}
+               </code>
+              </pre>
+          </section>
+          <section>
+              <pre>
+               <code>
+contract stringer(x T) {
+	var s string = x.String()
+}
+               </code>
+              </pre>
+          </section>
+          <section>
+              <pre>
+               <code>
+func Stringify(type T stringer)(s []T) (ret []string) {
+	for _, v := range s {
+		ret = append(ret, v.String()) // now valid
+	}
+	return ret
+}
+               </code>
+              </pre>
+          </section>
+        </section>
+
+        <section>
+          <h3>Sources</h3>
+          <section>
+            <a href="https://docs.google.com/document/d/1vrAy9gMpMoS3uaVphB32uVXX4pi-HnNjkMEgyAHX4N4/view#heading=h.nleqx9lao108">Summary of Go Generics Discussions</a>
+            <a href="https://go.googlesource.com/proposal/+/master/design/15292-generics.md#">Proposal: Go Should have generics 2016</a>
+            <a href="https://go.googlesource.com/proposal/+/master/design/go2draft-generics-overview.md">Generics - Problem Overview</a>
+          </section>
+        </section>
 			</div>
 		</div>
 
